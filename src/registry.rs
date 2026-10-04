@@ -1,9 +1,4 @@
-/**
- * Снимок имён из IANA JOSE/JWT registries.
- *
- * Это справочная часть API, а не закрытый список допустимых значений.
- * Неизвестные значения должны сохраняться, поскольку registries расширяемы.
- */
+//! Registry identifier snapshots preserve unknown future values.
 
 pub const JOSE_HEADER_PARAMETERS: &[&str] = &[
     "alg",

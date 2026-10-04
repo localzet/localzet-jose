@@ -205,19 +205,20 @@ fn encrypt_content(
     OsRng.fill_bytes(&mut iv);
 
     let mut buffer = plaintext.to_vec();
+    let nonce = Nonce::from(iv);
 
     let tag = match enc {
         "A128GCM" => {
             let cipher = Aes128Gcm::new_from_slice(cek).map_err(|_| JoseError::InvalidKey)?;
             cipher
-                .encrypt_in_place_detached(Nonce::from_slice(&iv), aad, &mut buffer)
+                .encrypt_in_place_detached(&nonce, aad, &mut buffer)
                 .map_err(|_| JoseError::Crypto)?
                 .to_vec()
         }
         "A256GCM" => {
             let cipher = Aes256Gcm::new_from_slice(cek).map_err(|_| JoseError::InvalidKey)?;
             cipher
-                .encrypt_in_place_detached(Nonce::from_slice(&iv), aad, &mut buffer)
+                .encrypt_in_place_detached(&nonce, aad, &mut buffer)
                 .map_err(|_| JoseError::Crypto)?
                 .to_vec()
         }
@@ -240,20 +241,22 @@ fn decrypt_content(
     }
 
     let mut buffer = ciphertext.to_vec();
-    let nonce = Nonce::from_slice(iv);
-    let tag = Tag::from_slice(tag);
+    let iv: [u8; 12] = iv.try_into().map_err(|_| JoseError::InvalidJwe)?;
+    let tag: [u8; 16] = tag.try_into().map_err(|_| JoseError::InvalidJwe)?;
+    let nonce = Nonce::from(iv);
+    let tag = Tag::from(tag);
 
     match enc {
         "A128GCM" => {
             let cipher = Aes128Gcm::new_from_slice(cek).map_err(|_| JoseError::InvalidKey)?;
             cipher
-                .decrypt_in_place_detached(nonce, aad, &mut buffer, tag)
+                .decrypt_in_place_detached(&nonce, aad, &mut buffer, &tag)
                 .map_err(|_| JoseError::AuthenticationFailed)?;
         }
         "A256GCM" => {
             let cipher = Aes256Gcm::new_from_slice(cek).map_err(|_| JoseError::InvalidKey)?;
             cipher
-                .decrypt_in_place_detached(nonce, aad, &mut buffer, tag)
+                .decrypt_in_place_detached(&nonce, aad, &mut buffer, &tag)
                 .map_err(|_| JoseError::AuthenticationFailed)?;
         }
         other => return Err(JoseError::UnsupportedAlgorithm(other.to_owned())),
@@ -327,4 +330,24 @@ mod tests {
 
         assert_eq!(decoded.plaintext, b"secret");
     }
+    #[test]
+    fn rejects_invalid_and_modified_aead_inputs() {
+        for (algorithm, size) in [("A128GCM", 16), ("A256GCM", 32)] {
+            let key = vec![0x55; size];
+            let (iv, ciphertext, tag) = encrypt_content(algorithm, &key, b"header", b"payload").unwrap();
+            assert_eq!(decrypt_content(algorithm, &key, b"header", &iv, &ciphertext, &tag).unwrap(), b"payload");
+            for (aad, nonce, auth_tag) in [
+                (b"other".as_slice(), iv.as_slice(), tag.as_slice()),
+                (b"header".as_slice(), &iv[..11], tag.as_slice()),
+                (b"header".as_slice(), iv.as_slice(), &tag[..15]),
+            ] {
+                assert!(decrypt_content(algorithm, &key, aad, nonce, &ciphertext, auth_tag).is_err());
+            }
+            let mut tampered = ciphertext.clone();
+            tampered[0] ^= 1;
+            assert!(decrypt_content(algorithm, &key, b"header", &iv, &tampered, &tag).is_err());
+            assert!(decrypt_content(algorithm, &vec![0x66; size], b"header", &iv, &ciphertext, &tag).is_err());
+        }
+    }
+
 }

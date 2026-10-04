@@ -1,19 +1,7 @@
 #![forbid(unsafe_code)]
 
-/**
- * localzet-jose
- *
- * Библиотека разделена по сущностям семейства JOSE:
- *
- * - JWA — идентификаторы и криптографические алгоритмы;
- * - JWK — представление и наборы ключей;
- * - JWS — цифровая подпись и MAC;
- * - JWE — шифрование;
- * - JWT — Claims Set и прикладная валидация.
- *
- * Важно: синтаксический разбор, криптографическая проверка и прикладная
- * валидация являются разными этапами и не смешиваются в одну операцию.
- */
+//! JOSE models, cryptographic framing and explicit application policies.
+//! Parsing, signature verification and claim validation are separate stages.
 
 pub mod claims;
 pub mod error;

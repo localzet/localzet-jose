@@ -31,7 +31,7 @@ Caller policy, provider algorithm and key type must agree. Never derive trust so
 
 ## Toolchain and status
 
-Rust 1.85 is required by locked dependencies; the old 1.75 declaration was inaccurate. Local tests were run on Rust 1.98.1. CI checks 1.85 and 1.98.1. Clippy runs with warnings visible; deprecated GenericArray usage and existing style warnings are still pending.
+Rust 1.85 is required by locked dependencies; the old 1.75 declaration was inaccurate. Local tests were run on Rust 1.98.1. CI checks 1.85 and 1.98.1. CI rejects Clippy warnings in the library. Existing test/example style warnings remain outside that gate.
 
 The current tests cover compact and detached HMAC signing, JWT round trips and explicit rejection of unsecured signatures without opt-in. They do not establish interoperability of every listed provider.
 

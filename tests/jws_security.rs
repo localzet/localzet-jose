@@ -1,8 +1,16 @@
-use localzet_jose::{header::JoseHeader, jwa::HmacKey, jws::{sign_compact, verify_compact}, VerificationPolicy};
+use localzet_jose::{
+    header::JoseHeader,
+    jwa::HmacKey,
+    jws::{sign_compact, verify_compact},
+    VerificationPolicy,
+};
 
 fn signed() -> (HmacKey, String) {
     let key = HmacKey::new("HS256", vec![0x55; 32]).unwrap();
-    let header = JoseHeader { alg: Some("HS256".into()), ..Default::default() };
+    let header = JoseHeader {
+        alg: Some("HS256".into()),
+        ..Default::default()
+    };
     let token = sign_compact(&header, b"payload", &key).unwrap();
     (key, token)
 }

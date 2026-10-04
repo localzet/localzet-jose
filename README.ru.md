@@ -220,6 +220,6 @@ cargo run --example hs256
 
 ## Статус проверки
 
-Это продолжение семейства [JWT/LWT](https://github.com/topics/localzet-tokens). Исправлена ошибка комментария, мешавшая компиляции. `cargo test --locked --all-targets` проверен на Rust 1.98.1. Минимальная версия по требованиям зафиксированных зависимостей — Rust 1.85 (прежнее значение 1.75 не соответствовало lock-файлу). CI отдельно проверяет обе версии. Clippy пока сообщает предупреждения; устранение deprecated GenericArray и расширение negative/interoperability tests остаются задачами до production-релиза.
+Это продолжение семейства [JWT/LWT](https://github.com/topics/localzet-tokens). Исправлена ошибка комментария, мешавшая компиляции. `cargo test --locked --all-targets` проверен на Rust 1.98.1. Минимальная версия по требованиям зафиксированных зависимостей — Rust 1.85 (прежнее значение 1.75 не соответствовало lock-файлу). CI отдельно проверяет обе версии. В CI предупреждения Clippy для библиотеки считаются ошибками. Deprecated GenericArray вызовы устранены; добавлены проверки отказа для повреждённых AEAD-параметров и недоверенных JWS. Расширение interoperability/fuzz tests остаётся задачей до production-релиза.
 
 [English documentation](README.md).
