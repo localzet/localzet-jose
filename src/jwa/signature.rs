@@ -200,9 +200,7 @@ impl JwsSigner for RsaSigner {
     }
 }
 
-/**
- * RSA verifier для RS*/PS*.
- */
+/// RSA verifier for RSASSA-PKCS1-v1_5 and RSASSA-PSS.
 #[derive(Clone)]
 pub struct RsaVerifier {
     algorithm: &'static str,

@@ -1,20 +1,13 @@
 # Security
 
-Этот репозиторий создаётся как учебная/reference реализация JOSE.
+This is an educational/reference implementation, pending independent security review. Current unit tests are not evidence that every provider is ready for production.
 
-До отдельного security audit его не следует считать заменой зрелой
-production-библиотеки для финансовых, медицинских или иных high-risk систем.
+- Callers explicitly allow algorithms; an untrusted header cannot select them alone.
+- Unsecured `none` requires explicit opt-in.
+- HMAC key size is at least the digest output size; RSA signing keys are at least 2048 bits.
+- JWS verification uses original encoded segments and processes `crit` and `b64=false` explicitly.
+- Cryptographic verification and JWT application claim validation are separate.
+- JWE binds the protected header as AEAD additional authenticated data, and decryption requires allowed key/content algorithms.
+- RSA1_5 is a known registry identifier without an enabled provider.
 
-## Основные правила проекта
-
-- `alg` из токена не выбирает алгоритм без allow-list caller-а.
-- `none` запрещён по умолчанию.
-- HMAC требует минимальную длину ключа согласно размеру hash output.
-- RSA signing keys должны быть не меньше 2048 бит.
-- JWS verification использует оригинальные encoded segments.
-- `crit` не игнорируется.
-- `b64=false` обрабатывается отдельно.
-- Cryptographic verification и JWT claims validation разделены.
-- JWE AES-GCM использует Protected Header как AAD.
-- `RSA1_5` известен registry, но crypto operation намеренно отключена в baseline.
-- JWE decrypt требует allow-list для `alg` и `enc`.
+Do not publish private keys or production tokens in issues. For private reports, use GitHub private vulnerability reporting if enabled, or contact the maintainer through an existing private channel. [Русская версия](SECURITY.ru.md).
