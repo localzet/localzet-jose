@@ -1,0 +1,211 @@
+/**
+ * Снимок имён из IANA JOSE/JWT registries.
+ *
+ * Это справочная часть API, а не закрытый список допустимых значений.
+ * Неизвестные значения должны сохраняться, поскольку registries расширяемы.
+ */
+
+pub const JOSE_HEADER_PARAMETERS: &[&str] = &[
+    "alg",
+    "jku",
+    "jwk",
+    "kid",
+    "x5u",
+    "x5c",
+    "x5t",
+    "x5t#S256",
+    "typ",
+    "cty",
+    "crit",
+    "enc",
+    "zip",
+    "epk",
+    "apu",
+    "apv",
+    "iv",
+    "tag",
+    "p2s",
+    "p2c",
+    "iss",
+    "sub",
+    "aud",
+    "b64",
+    "ppt",
+    "url",
+    "nonce",
+    "svt",
+    "iheSSId",
+    "jwt",
+    "client_id",
+    "trust_chain",
+    "peer_trust_chain",
+];
+
+pub const JWS_ALGORITHMS: &[&str] = &[
+    "HS256",
+    "HS384",
+    "HS512",
+    "RS256",
+    "RS384",
+    "RS512",
+    "ES256",
+    "ES384",
+    "ES512",
+    "PS256",
+    "PS384",
+    "PS512",
+    "none",
+    "EdDSA",
+    "ES256K",
+    "Ed25519",
+    "Ed448",
+    "ML-DSA-44",
+    "ML-DSA-65",
+    "ML-DSA-87",
+];
+
+pub const JWE_KEY_MANAGEMENT_ALGORITHMS: &[&str] = &[
+    "RSA1_5",
+    "RSA-OAEP",
+    "RSA-OAEP-256",
+    "RSA-OAEP-384",
+    "RSA-OAEP-512",
+    "A128KW",
+    "A192KW",
+    "A256KW",
+    "dir",
+    "ECDH-ES",
+    "ECDH-ES+A128KW",
+    "ECDH-ES+A192KW",
+    "ECDH-ES+A256KW",
+    "A128GCMKW",
+    "A192GCMKW",
+    "A256GCMKW",
+    "PBES2-HS256+A128KW",
+    "PBES2-HS384+A192KW",
+    "PBES2-HS512+A256KW",
+];
+
+pub const JWE_CONTENT_ENCRYPTION_ALGORITHMS: &[&str] = &[
+    "A128CBC-HS256",
+    "A192CBC-HS384",
+    "A256CBC-HS512",
+    "A128GCM",
+    "A192GCM",
+    "A256GCM",
+];
+
+pub const JWT_REGISTERED_CLAIMS: &[&str] = &[
+    "iss", "sub", "aud", "exp", "nbf", "iat", "jti",
+    "name", "given_name", "family_name", "middle_name", "nickname",
+    "preferred_username", "profile", "picture", "website", "email",
+    "email_verified", "gender", "birthdate", "zoneinfo", "locale",
+    "phone_number", "phone_number_verified", "address", "updated_at",
+    "azp", "nonce", "auth_time", "at_hash", "c_hash", "acr", "amr",
+    "sub_jwk", "cnf", "sip_from_tag", "sip_date", "sip_callid",
+    "sip_cseq_num", "sip_via_branch", "orig", "dest", "mky", "events",
+    "toe", "txn", "rph", "sid", "vot", "vtm", "attest", "origid",
+    "act", "scope", "client_id", "may_act", "jcard", "at_use_nbr",
+    "div", "opt", "vc", "vp", "sph", "ace_profile", "cnonce", "exi",
+    "roles", "groups", "entitlements", "token_introspection", "eat_nonce",
+    "ueid", "sueids", "oemid", "hwmodel", "hwversion", "oemboot",
+    "dbgstat", "location", "eat_profile", "submods", "uptime", "bootcount",
+    "bootseed", "dloas", "swname", "swversion", "manifests", "measurements",
+    "measres", "intuse", "cdniv", "cdnicrit", "cdniip", "cdniuc",
+    "cdniets", "cdnistt", "cdnistd", "sig_val_claims",
+    "authorization_details", "verified_claims", "place_of_birth",
+    "nationalities", "birth_family_name", "birth_given_name",
+    "birth_middle_name", "salutation", "title", "msisdn", "also_known_as",
+    "htm", "htu", "ath", "atc", "sub_id", "rcd", "rcdi", "crn", "msgi",
+    "_claim_names", "_claim_sources", "rdap_allowed_purposes",
+    "rdap_dnt_allowed", "geohash", "_sd", "...", "_sd_alg", "sd_hash",
+    "consumerPlmnId", "consumerSnpnId", "producerPlmnId", "producerSnpnId",
+    "producerSnssaiList", "producerNsiList", "producerNfSetId",
+    "producerNfServiceSetId", "sourceNfInstanceId", "analyticsIdList",
+    "resOwnerId", "cmw", "jwks", "metadata", "constraints", "crit", "ref",
+    "delegation", "logo_uri", "authority_hints", "trust_anchor_hints",
+    "trust_marks", "trust_mark_issuers", "trust_mark_owners",
+    "metadata_policy", "metadata_policy_crit", "source_endpoint", "keys",
+    "trust_mark_type", "trust_chain", "trust_anchor", "status",
+    "status_list", "ttl", "stpl",
+];
+
+/**
+ * Зарегистрированные JWK Key Types (kty).
+ */
+pub const JWK_KEY_TYPES: &[&str] = &["EC", "RSA", "oct", "OKP", "AKP"];
+
+/**
+ * Зарегистрированные JWK Elliptic Curves / OKP curves.
+ */
+pub const JWK_CURVES: &[&str] = &[
+    "P-256",
+    "P-384",
+    "P-521",
+    "Ed25519",
+    "Ed448",
+    "X25519",
+    "X448",
+    "secp256k1",
+];
+
+/**
+ * Зарегистрированные значения JWK use.
+ */
+pub const JWK_PUBLIC_KEY_USES: &[&str] = &["sig", "enc"];
+
+/**
+ * Зарегистрированные значения JWK key_ops.
+ */
+pub const JWK_KEY_OPERATIONS: &[&str] = &[
+    "sign",
+    "verify",
+    "encrypt",
+    "decrypt",
+    "wrapKey",
+    "unwrapKey",
+    "deriveKey",
+    "deriveBits",
+];
+
+/**
+ * Зарегистрированные параметры JSON Web Key.
+ *
+ * Часть параметров относится только к определённым kty или расширениям.
+ */
+pub const JWK_PARAMETERS: &[&str] = &[
+    "kty",
+    "use",
+    "key_ops",
+    "alg",
+    "kid",
+    "x5u",
+    "x5c",
+    "x5t",
+    "x5t#S256",
+    "crv",
+    "x",
+    "y",
+    "d",
+    "n",
+    "e",
+    "p",
+    "q",
+    "dp",
+    "dq",
+    "qi",
+    "oth",
+    "k",
+    "ext",
+    "iat",
+    "nbf",
+    "exp",
+    "revoked",
+    "pub",
+    "priv",
+];
+
+/**
+ * Зарегистрированные алгоритмы сжатия JWE.
+ */
+pub const JWE_COMPRESSION_ALGORITHMS: &[&str] = &["DEF"];
