@@ -27,7 +27,7 @@ let policy = VerificationPolicy::new().allow_algorithm("Ed25519");
 let verified = jwt::verify(token, &key, &policy, &claims_validation)?;
 ```
 
-Caller policy, provider algorithm and key type must agree. Never derive trust solely from the token's `alg`. Review [SECURITY.md](SECURITY.md) before integration.
+Caller policy, provider algorithm and key type must agree. Never derive trust solely from the token's `alg`. Review [SECURITY.md](.github/SECURITY.md) before integration.
 
 ## Toolchain and status
 
@@ -43,3 +43,7 @@ The current tests cover compact and detached HMAC signing, JWT round trips and e
 4. Review key lifetime, secret storage and errors before production use.
 
 License: [AGPL-3.0-or-later](LICENSE).
+
+## Attribution
+
+Maintainer of Localzet contributions: **Ivan Zorin (localzet)** — <creator@localzet.com> · https://www.localzet.com. Copyright © 2026 Localzet Group. Original authorship and third-party licenses remain applicable. See [AUTHORS](.github/AUTHORS.md).
