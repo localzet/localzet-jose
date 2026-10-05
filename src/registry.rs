@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2026 Ivan Zorin <creator@localzet.com> (Localzet contributions)
+// SPDX-License-Identifier: AGPL-3.0
 //! Registry identifier snapshots preserve unknown future values.
 
 pub const JOSE_HEADER_PARAMETERS: &[&str] = &[
