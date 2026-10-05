@@ -12,11 +12,7 @@ pub use validation::ClaimsValidation;
 /**
  * Создаёт signed JWT в JWS Compact Serialization.
  */
-pub fn sign(
-    header: &JoseHeader,
-    claims: &JwtClaims,
-    signer: &dyn JwsSigner,
-) -> Result<String> {
+pub fn sign(header: &JoseHeader, claims: &JwtClaims, signer: &dyn JwsSigner) -> Result<String> {
     let payload = serde_json::to_vec(claims)?;
     sign_compact(header, &payload, signer)
 }

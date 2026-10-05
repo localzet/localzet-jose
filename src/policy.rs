@@ -120,7 +120,9 @@ impl JweDecryptionPolicy {
             .allowed_content_encryption_algorithms
             .contains(content_encryption)
         {
-            return Err(JoseError::AlgorithmNotAllowed(content_encryption.to_owned()));
+            return Err(JoseError::AlgorithmNotAllowed(
+                content_encryption.to_owned(),
+            ));
         }
 
         Ok(())

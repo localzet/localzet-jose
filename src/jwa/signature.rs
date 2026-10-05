@@ -2,13 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0
 use hmac::{Hmac, Mac};
 use rand::rngs::OsRng;
-use rsa::{
-    traits::PublicKeyParts,
-    Pkcs1v15Sign,
-    Pss,
-    RsaPrivateKey,
-    RsaPublicKey,
-};
+use rsa::{traits::PublicKeyParts, Pkcs1v15Sign, Pss, RsaPrivateKey, RsaPublicKey};
 use sha2::{Digest, Sha256, Sha384, Sha512};
 use signature::{Signer as _, Verifier as _};
 
@@ -228,15 +222,21 @@ impl JwsVerifier for RsaVerifier {
 
     fn verify(&self, input: &[u8], signature: &[u8]) -> Result<()> {
         let result = match self.algorithm {
-            "RS256" => self
-                .key
-                .verify(Pkcs1v15Sign::new::<Sha256>(), &Sha256::digest(input), signature),
-            "RS384" => self
-                .key
-                .verify(Pkcs1v15Sign::new::<Sha384>(), &Sha384::digest(input), signature),
-            "RS512" => self
-                .key
-                .verify(Pkcs1v15Sign::new::<Sha512>(), &Sha512::digest(input), signature),
+            "RS256" => self.key.verify(
+                Pkcs1v15Sign::new::<Sha256>(),
+                &Sha256::digest(input),
+                signature,
+            ),
+            "RS384" => self.key.verify(
+                Pkcs1v15Sign::new::<Sha384>(),
+                &Sha384::digest(input),
+                signature,
+            ),
+            "RS512" => self.key.verify(
+                Pkcs1v15Sign::new::<Sha512>(),
+                &Sha512::digest(input),
+                signature,
+            ),
             "PS256" => self
                 .key
                 .verify(Pss::new::<Sha256>(), &Sha256::digest(input), signature),
@@ -358,26 +358,26 @@ impl JwsVerifier for EcdsaVerifier {
     fn verify(&self, input: &[u8], signature: &[u8]) -> Result<()> {
         match &self.key {
             EcVerifyingKey::P256(key) => {
-                let signature =
-                    p256::ecdsa::Signature::try_from(signature).map_err(|_| JoseError::InvalidSignature)?;
+                let signature = p256::ecdsa::Signature::try_from(signature)
+                    .map_err(|_| JoseError::InvalidSignature)?;
                 key.verify(input, &signature)
                     .map_err(|_| JoseError::InvalidSignature)
             }
             EcVerifyingKey::P384(key) => {
-                let signature =
-                    p384::ecdsa::Signature::try_from(signature).map_err(|_| JoseError::InvalidSignature)?;
+                let signature = p384::ecdsa::Signature::try_from(signature)
+                    .map_err(|_| JoseError::InvalidSignature)?;
                 key.verify(input, &signature)
                     .map_err(|_| JoseError::InvalidSignature)
             }
             EcVerifyingKey::P521(key) => {
-                let signature =
-                    p521::ecdsa::Signature::try_from(signature).map_err(|_| JoseError::InvalidSignature)?;
+                let signature = p521::ecdsa::Signature::try_from(signature)
+                    .map_err(|_| JoseError::InvalidSignature)?;
                 key.verify(input, &signature)
                     .map_err(|_| JoseError::InvalidSignature)
             }
             EcVerifyingKey::Secp256k1(key) => {
-                let signature =
-                    k256::ecdsa::Signature::try_from(signature).map_err(|_| JoseError::InvalidSignature)?;
+                let signature = k256::ecdsa::Signature::try_from(signature)
+                    .map_err(|_| JoseError::InvalidSignature)?;
                 key.verify(input, &signature)
                     .map_err(|_| JoseError::InvalidSignature)
             }
@@ -432,8 +432,8 @@ impl JwsVerifier for Ed25519Verifier {
     }
 
     fn verify(&self, input: &[u8], signature: &[u8]) -> Result<()> {
-        let signature =
-            ed25519_dalek::Signature::try_from(signature).map_err(|_| JoseError::InvalidSignature)?;
+        let signature = ed25519_dalek::Signature::try_from(signature)
+            .map_err(|_| JoseError::InvalidSignature)?;
 
         self.key
             .verify(input, &signature)

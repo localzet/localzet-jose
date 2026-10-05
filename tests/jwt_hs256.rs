@@ -3,8 +3,7 @@ use localzet_jose::{
     header::JoseHeader,
     jwa::HmacKey,
     jwt::{self, ClaimsValidation},
-    JwtClaims,
-    VerificationPolicy,
+    JwtClaims, VerificationPolicy,
 };
 
 #[test]

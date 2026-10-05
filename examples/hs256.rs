@@ -1,9 +1,7 @@
 use localzet_jose::{
     jwa::HmacKey,
     jwt::{self, ClaimsValidation},
-    JoseHeader,
-    JwtClaims,
-    VerificationPolicy,
+    JoseHeader, JwtClaims, VerificationPolicy,
 };
 
 fn main() -> localzet_jose::Result<()> {

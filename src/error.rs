@@ -21,10 +21,7 @@ pub enum JoseError {
      * Некорректное количество сегментов Compact Serialization.
      */
     #[error("Некорректное количество сегментов: ожидалось {expected}, получено {actual}")]
-    InvalidSegmentCount {
-        expected: usize,
-        actual: usize,
-    },
+    InvalidSegmentCount { expected: usize, actual: usize },
 
     /**
      * В защищённом заголовке отсутствует обязательный параметр.
@@ -66,10 +63,7 @@ pub enum JoseError {
      * Ключ недостаточной длины для выбранного алгоритма.
      */
     #[error("Недостаточная длина ключа: требуется минимум {required} байт, получено {actual}")]
-    WeakKey {
-        required: usize,
-        actual: usize,
-    },
+    WeakKey { required: usize, actual: usize },
 
     /**
      * Критический Header Parameter не поддерживается вызывающей стороной.

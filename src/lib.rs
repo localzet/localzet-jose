@@ -9,12 +9,12 @@ pub mod claims;
 pub mod error;
 pub mod header;
 pub mod jwa;
-pub mod jwk;
 pub mod jwe;
+pub mod jwk;
 pub mod jws;
-pub mod registry;
 pub mod jwt;
 pub mod policy;
+pub mod registry;
 
 mod base64url;
 

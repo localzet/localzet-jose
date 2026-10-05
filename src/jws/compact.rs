@@ -78,11 +78,7 @@ pub fn parse_compact(input: &str) -> Result<CompactJws> {
 /**
  * Создаёт обычный JWS Compact Serialization.
  */
-pub fn sign_compact(
-    header: &JoseHeader,
-    payload: &[u8],
-    signer: &dyn JwsSigner,
-) -> Result<String> {
+pub fn sign_compact(header: &JoseHeader, payload: &[u8], signer: &dyn JwsSigner) -> Result<String> {
     sign_compact_internal(header, payload, signer, false)
 }
 
